@@ -18,15 +18,15 @@ const Shape = ({ colorInd, fill, shapeInd }) => {
             </pattern>
             {shapeInd == 0 && (
                 <rect x="5" y="5" width="60" height="20" ry="10" rx="10"
-                    strokeWidth="4" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
+                    strokeWidth="3" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
             )}
             {shapeInd == 1 && (
                 <polygon points='35 5, 65 15, 35 25,5 15'
-                    strokeWidth="4" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
+                    strokeWidth="3" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
             )}
             {shapeInd == 2 && (
                 <path d='m 6 6 c 4 -8 55 8 59 0 c 4 -8 4 11 0 19 c -4 8 -55 -8 -59 0 c -4 8 -4 -11 0 -19'
-                    strokeWidth="4" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
+                    strokeWidth="3" fill={fill == 1 ? `url(#diagonalHatch${colorInd})` : colorRef[colorInd]} fillOpacity={fill == 0 ? "0" : "1"} stroke={colorRef[colorInd]} />
             )}
 
         </svg>

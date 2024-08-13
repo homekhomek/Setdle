@@ -6,6 +6,7 @@ const Game = ({ deck }) => {
     const gameDeck = deck;
     const [gameBoard, setGameBoard] = useState([]);
     const [selectedCards, setSelectedCards] = useState([]);
+    const [startTime, setStartTime] = useState(Date.now());
 
     const sol = useMemo(() => {
         var posSolution = [];
@@ -55,6 +56,7 @@ const Game = ({ deck }) => {
     }, [gameBoard])
 
 
+
     const clickCard = (uid) => {
         if (selectedCards.includes(uid)) {
             selectedCards.splice(selectedCards.indexOf(uid), 1);
@@ -84,9 +86,6 @@ const Game = ({ deck }) => {
                 setSelectedCards([]);
                 return;
             }
-
-
-
         }
 
         setSelectedCards([]);
@@ -100,15 +99,20 @@ const Game = ({ deck }) => {
 
     useEffect(() => {
         if (gameBoard.length < 12) {
-            for (var i = 0; i < 12 - gameBoard.length; i++)
-                gameBoard.push(gameDeck.pop());
+            for (var i = 0; i < 12 - gameBoard.length; i++) {
+                if (gameDeck.length >= 1)
+                    gameBoard.push(gameDeck.pop());
+            }
 
 
             setGameBoard([...gameBoard]);
         }
         else if ((!sol || sol.length == 0) && gameBoard.length <= 12) {
-            for (var i = 0; i < 3; i++)
-                gameBoard.push(gameDeck.pop());
+            for (var i = 0; i < 3; i++) {
+                if (gameDeck.length >= 1)
+                    gameBoard.push(gameDeck.pop());
+            }
+
             setGameBoard([...gameBoard]);
         }
 
@@ -120,7 +124,12 @@ const Game = ({ deck }) => {
         <div className="w-[270px]">
             <FlipMove
                 duration={500}
-                easing="ease-out"
+                easing="linear(
+    0, 0.004, 0.016, 0.035, 0.063, 0.098, 0.141 13.6%, 0.25, 0.391, 0.563, 0.765,
+    1, 0.891 40.9%, 0.848, 0.813, 0.785, 0.766, 0.754, 0.75, 0.754, 0.766, 0.785,
+    0.813, 0.848, 0.891 68.2%, 1 72.7%, 0.973, 0.953, 0.941, 0.938, 0.941, 0.953,
+    0.973, 1, 0.988, 0.984, 0.988, 1
+  )"
                 enterAnimation={{
                     from: {
                         transform: 'translateY(120px)',
@@ -149,6 +158,10 @@ const Game = ({ deck }) => {
                     ></Card>
                 ))}
             </FlipMove>
+            <div className="w-[260px] inline-block rounded-lg ml-[10px] mb-[10px] align-middle box-border text-center p-3 bg-[#f4f4f4]">
+                {gameDeck.length} / 81 CARDS
+                <div className="box-border p-2 bg-green-300 w-3/4 rounded-lg mx-auto mt-3">ADD ROW</div>
+            </div>
         </div>
     );
 };
