@@ -9,7 +9,7 @@ var gameModes = [
     codeName: "daily",
     buttonName: "Play Daily 6 Sets",
     desc: "Complete 6 sets as fast as possible, refreshes every day!",
-    btnColor: "bg-[#3b5dc9] text-white",
+    btnColor: "bg-[#2656ed] text-white",
     btnPlayed: "text-[#3b5dc9] border-[#3b5dc9] border-2",
     categoryName: "Daily 6 Set"
   },
@@ -121,10 +121,10 @@ function App() {
 
   return (
     <div className='font-ammy text-center text-xl'>
-      <div className={`text-white text-6xl my-4 transition-all tracking-widest ${gameGoing ? "" : "mt-[25vh]"}`}>Set<span className='text-[#73eff7] '>dle</span></div>
+      <div className={`text-[#2656ed] text-6xl my-4 transition-all tracking-widest ${gameGoing ? "" : "mt-[25vh]"}`}>Set<span className='text-[#566c86]'>dle</span></div>
       {!gameGoing && (
         <div className='text-center'>
-          <div className={`absolute w-full h-screen top-0 transition-all duration-300 bg-[rgba(0,0,0,.5)] ${showModal ? "opacity-100" : "opacity-0 invisible"}`}
+          <div className={`absolute w-full bg-[#f4f4f4] h-screen top-0 transition-all duration-300 bg-[rgba(0,0,0,.5)] ${showModal ? "opacity-100" : "opacity-0 invisible"}`}
             onClick={() => { setShowModal(false) }}>
 
             <div className={`absolute w-9/12 left-[12.5%] box-border p-4 top-[15vh] transition-all duration-300 text-center bg-[#f4f4f4] rounded-lg  ${showModal ? "opacity-100" : "opacity-0 invisible"} `}>

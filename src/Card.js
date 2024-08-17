@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
 
 //https://lospec.com/palette-list/sweetie-16
-const colorRef = ["#b13e53", "#3b5dc9", "#38b764"];
+//const colorRef = ["#b13e53", "#3b5dc9", "#38b764"];
+const colorRef = ["#d12a48", "#2656ed", "#23c45b"];
 const stripePattern = "";
 
 const Shape = ({ colorInd, fill, shapeInd }) => {
@@ -42,7 +43,7 @@ const Card = forwardRef(({ cardData, clickHandler, selected }, ref) => {
         <div ref={ref} onClick={(ev) => {
             clickHandler(cardData.uid)
         }} className={`w-[80px] h-[120px] inline-block rounded-lg ml-[10px] mb-[10px] align-top `}>
-            <div className={`flex justify-center items-center rounded-lg transition-all flex-col h-full ${selected ? "bg-[#94b0c2] scale-95" : "bg-[#f4f4f4]"}`}>
+            <div className={`flex justify-center items-center rounded-lg transition-all flex-col h-full ${selected ? "bg-[#d1d1d1] scale-95" : "bg-[#e8e8e8]"}`}>
                 {[...Array(cardData.numberOfSymbols + 1)].map((e, i) => {
                     return (<Shape key={i} colorInd={cardData.color} fill={cardData.fillPattern} shapeInd={cardData.shape}></Shape>)
                 })}

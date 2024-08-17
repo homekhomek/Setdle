@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-    background-color: #94b0c2;
+    background-color: #f4f4f4;
     min-height: 100vh;
     overflow: hidden
 }
@@ -14,4 +14,5 @@
     @apply p-2;
     @apply box-border;
     @apply text-xl;
+    @apply shadow-sm;
 }
