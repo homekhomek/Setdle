@@ -2,11 +2,27 @@ import { useEffect, useMemo, useState } from "react";
 import FlipMove from 'react-flip-move';
 import Card from './Card';
 
-const Game = ({ deck }) => {
+/*
+    Gamemodes
+    - daily - first to six
+    - fullDeck - lol
+    - randFullDeck
+
+*/
+
+const Game = ({ deck, gameMode, gameOverCallback }) => {
     const gameDeck = deck;
     const [gameBoard, setGameBoard] = useState([]);
     const [selectedCards, setSelectedCards] = useState([]);
+    const [elapsedTime, setElapsedTime] = useState(0);
     const [startTime, setStartTime] = useState(Date.now());
+    const [setsComplete, setSetsComplete] = useState(0);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setElapsedTime(Date.now() - startTime);
+        }, 100);
+    });
 
     const sol = useMemo(() => {
         var posSolution = [];
@@ -94,10 +110,22 @@ const Game = ({ deck }) => {
         });
 
         setGameBoard(newGameBoard);
+        setSetsComplete(setsComplete + 1);
+
         return;
     }, [selectedCards, gameBoard,])
 
+
+
     useEffect(() => {
+
+        if (
+            ((gameMode == "fullDeck" || gameMode == "randFullDeck") && gameDeck.length <= 0 && (!sol || sol.length == 0)) ||
+            (gameMode == "daily" && setsComplete >= 6)) {
+            gameOverCallback(gameMode, (elapsedTime / 1000).toFixed(2));
+            return;
+        }
+
         if (gameBoard.length < 12) {
             for (var i = 0; i < 12 - gameBoard.length; i++) {
                 if (gameDeck.length >= 1)
@@ -116,12 +144,20 @@ const Game = ({ deck }) => {
             setGameBoard([...gameBoard]);
         }
 
-    }, [gameBoard, sol])
+    }, [gameBoard, sol, setsComplete, gameMode])
 
 
 
     return (
-        <div className="w-[270px]">
+        <div className="w-[270px] mx-auto">
+            <div className="w-full flex justify-between p-3">
+                <div className="text-left">
+                    {gameMode == "daily" ? `${setsComplete}/6 Sets` : "Full Deck"}
+                </div>
+                <div className="text-right">
+                    {(elapsedTime / 1000).toFixed(2)}s
+                </div>
+            </div>
             <FlipMove
                 duration={500}
                 easing="linear(
@@ -160,7 +196,14 @@ const Game = ({ deck }) => {
             </FlipMove>
             <div className="w-[260px] inline-block rounded-lg ml-[10px] mb-[10px] align-middle box-border text-center p-3 bg-[#f4f4f4]">
                 {gameDeck.length} / 81 CARDS
-                <div className="box-border p-2 bg-green-300 w-3/4 rounded-lg mx-auto mt-3">ADD ROW</div>
+                <div onClick={() => {
+                    setSelectedCards([]);
+                    gameBoard.splice(0, 3);
+
+                    setGameBoard([...gameBoard]);
+                    setSetsComplete(setsComplete + 1);
+
+                }} className="btn bg-green-300 w-3/4 mx-auto mt-3">ADD ROW</div>
             </div>
         </div>
     );

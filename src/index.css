@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+    background-color: #94b0c2;
+    min-height: 100vh;
+    overflow: hidden
+}
+
+.btn {
+    @apply rounded-lg;
+    @apply cursor-pointer;
+    @apply p-2;
+    @apply box-border;
+    @apply text-xl;
+}
