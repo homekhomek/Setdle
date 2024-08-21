@@ -16,13 +16,23 @@ const Game = ({ deck, gameMode, gameOverCallback }) => {
     const [selectedCards, setSelectedCards] = useState([]);
     const [elapsedTime, setElapsedTime] = useState(0);
     const [startTime, setStartTime] = useState(Date.now());
+    const [secondsUntilCanAddRow, setSecondsUntilCanAddRow] = useState(15);
     const [setsComplete, setSetsComplete] = useState(0);
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
+        const milleIntervalID = setInterval(() => {
             setElapsedTime(Date.now() - startTime);
-        }, 100);
+            if (secondsUntilCanAddRow >= 0) {
+                setSecondsUntilCanAddRow(secondsUntilCanAddRow - .05);
+            }
+        }, 50);
+
+        return () => { clearInterval(milleIntervalID); }
     });
+
+    const canAddRow = useMemo(() => {
+        return secondsUntilCanAddRow <= 0 && gameDeck.length > 3
+    }, [secondsUntilCanAddRow, gameDeck])
 
     const sol = useMemo(() => {
         var posSolution = [];
@@ -197,13 +207,26 @@ const Game = ({ deck, gameMode, gameOverCallback }) => {
             <div className="w-[260px] inline-block rounded-lg ml-[10px] mb-[10px] align-middle box-border text-center p-3 bg-[#f4f4f4]">
                 {gameDeck.length} / 81 CARDS
                 <div onClick={() => {
+                    if (!canAddRow)
+                        return;
+
+                    for (var i = 0; i < 3; i++) {
+                        if (gameDeck.length >= 1)
+                            gameBoard.push(gameDeck.pop());
+                    }
+
+                    setSecondsUntilCanAddRow(15);
+                    setGameBoard([...gameBoard]);
+
+                }} className={`btn w-3/4 mx-auto mt-3 ${canAddRow ? "bg-[#38b764] text-white" : "text-[#38b764] border-[#38b764] border-2"}`}>ADD ROW {secondsUntilCanAddRow > 0 && gameDeck.length >= 3 ? `(${Math.ceil(secondsUntilCanAddRow)})` : ""}</div>
+                {/*<div onClick={() => {
                     setSelectedCards([]);
                     gameBoard.splice(0, 3);
 
                     setGameBoard([...gameBoard]);
                     setSetsComplete(setsComplete + 1);
 
-                }} className="btn bg-green-300 w-3/4 mx-auto mt-3">ADD ROW</div>
+                }} className="btn bg-green-300 w-3/4 mx-auto mt-3">Remove ROW</div>*/}
             </div>
         </div>
     );
